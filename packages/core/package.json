@@ -1,0 +1,33 @@
+{
+  "name": "@typz/core",
+  "version": "0.1.0",
+  "description": "Core engine and Laravel-inspired abstractions for the typz framework",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.12.2",
+    "@libsql/client": "^0.14.0",
+    "@libsql/core": "^0.18.0",
+    "drizzle-orm": "^0.33.0",
+    "hono": "^4.5.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  }
+}
