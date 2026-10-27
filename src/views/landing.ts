@@ -23,6 +23,11 @@ export function renderLandingPage(): string {
       --code-bg: #030304;
     }
 
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -88,7 +93,7 @@ export function renderLandingPage(): string {
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
     }
 
     .nav-link {
@@ -96,32 +101,30 @@ export function renderLandingPage(): string {
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
-      transition: color 0.15s ease;
+      position: relative;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ffffff;
+      border-radius: 2px;
+      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .nav-link:hover {
       color: var(--text);
     }
 
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-family: 'Geist Mono', monospace;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 8px #ffffff;
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
     }
 
     /* Hero */
@@ -133,19 +136,40 @@ export function renderLandingPage(): string {
     .hero-tag {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
+      gap: 10px;
+      padding: 6px 18px;
       border-radius: 9999px;
-      background: #18181b;
-      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: -0.01em;
       margin-bottom: 24px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: default;
+    }
+
+    .hero-tag:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .hero-tag-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fafafa;
     }
 
     .hero-tag strong {
       color: #ffffff;
+      font-weight: 600;
     }
 
     .hero-title {
@@ -585,10 +609,6 @@ export function renderLandingPage(): string {
         <a href="#features" class="nav-link">Features</a>
         <a href="#code" class="nav-link">Code</a>
         <a href="#tester" class="nav-link">API Tester</a>
-        <div class="status-badge">
-          <div class="status-dot"></div>
-          <span>v0.1.0 • Stable</span>
-        </div>
       </div>
     </div>
   </header>
@@ -597,9 +617,11 @@ export function renderLandingPage(): string {
     <!-- Hero -->
     <section class="hero">
       <div class="hero-tag">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-        </svg>
+        <span class="hero-tag-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </span>
         <span><strong>Laravel DX</strong> meets <strong>TypeScript</strong> speed</span>
       </div>
       <h1 class="hero-title">
@@ -921,6 +943,48 @@ app.<span class="code-function">listen</span>(3000, ({ port, host }) =&gt; {
         btn.innerText = 'Send Request';
       }
     }
+
+    // Smooth scroll animation for navbar links and buttons
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            const headerHeight = document.querySelector('header')?.offsetHeight || 72;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - (headerHeight + 24);
+            
+            window.scrollTo({
+              top: Math.max(0, targetPosition),
+              behavior: 'smooth'
+            });
+
+            if (history.pushState) {
+              history.pushState(null, '', targetId);
+            }
+          }
+        }
+      });
+    });
+
+    // Active link highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      const headerHeight = document.querySelector('header')?.offsetHeight || 72;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - headerHeight - 60;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + sectionId);
+          });
+        }
+      });
+    });
   </script>
 </body>
 </html>`;
