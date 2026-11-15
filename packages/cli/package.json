@@ -1,19 +1,22 @@
 {
-  "name": "typz",
-  "version": "0.1.0",
+  "name": "@llydsoawsm/typz",
+  "version": "0.1.1",
   "description": "Artisan-style CLI for the typz framework",
   "type": "module",
   "bin": {
-    "typz": "./dist/index.js"
+    "typz": "dist/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "@typz/core": "workspace:*",
+    "@llydsoawsm/core": "workspace:*",
     "cac": "^6.7.14",
     "picocolors": "^1.0.1"
   },

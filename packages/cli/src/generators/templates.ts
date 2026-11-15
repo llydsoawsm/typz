@@ -1,6 +1,6 @@
 export function controllerTemplate(name: string, isResource = false): string {
   if (isResource) {
-    return `import { Controller, TypzRequest } from '@typz/core';
+    return `import { Controller, TypzRequest } from '@llydsoawsm/core';
 
 export class ${name} extends Controller {
   /**
@@ -46,7 +46,7 @@ export class ${name} extends Controller {
 `;
   }
 
-  return `import { Controller, TypzRequest } from '@typz/core';
+  return `import { Controller, TypzRequest } from '@llydsoawsm/core';
 
 export class ${name} extends Controller {
   /**
@@ -60,7 +60,7 @@ export class ${name} extends Controller {
 }
 
 export function formRequestTemplate(name: string): string {
-  return `import { FormRequest, z } from '@typz/core';
+  return `import { FormRequest, z } from '@llydsoawsm/core';
 
 export class ${name} extends FormRequest {
   /**
@@ -97,7 +97,7 @@ export const ${tableName} = sqliteTable('${tableName}', {
 }
 
 export function middlewareTemplate(name: string): string {
-  return `import type { TypzMiddleware, TypzRequest } from '@typz/core';
+  return `import type { TypzMiddleware, TypzRequest } from '@llydsoawsm/core';
 
 export function ${name}(): TypzMiddleware {
   return async (req: TypzRequest, next: () => Promise<void>) => {

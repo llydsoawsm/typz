@@ -1,0 +1,23 @@
+{
+  "name": "create-typz",
+  "version": "0.1.1",
+  "description": "Create a new Typz backend application with one command",
+  "type": "module",
+  "bin": {
+    "create-typz": "dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ../cli/node_modules/tsup/dist/cli-default.js",
+    "dev": "node ../cli/node_modules/tsup/dist/cli-default.js --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "esbuild": "^0.23.0",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  }
+}

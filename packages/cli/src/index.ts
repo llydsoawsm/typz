@@ -10,8 +10,16 @@ import {
   modelTemplate,
   middlewareTemplate,
 } from './generators/templates.js';
+import { generateProject } from './generators/project.js';
 
 const cli = cac('typz');
+
+// Command: new
+cli
+  .command('new <name>', 'Create a brand new Typz application')
+  .action((name: string) => {
+    generateProject(name);
+  });
 
 function ensureDir(dirPath: string) {
   if (!fs.existsSync(dirPath)) {
@@ -113,7 +121,7 @@ cli
     try {
       // Dynamic import of routes
       await import(pathToFileURL(routesFile).href);
-      const { Route } = await import('@typz/core');
+      const { Route } = await import('@llydsoawsm/core');
       const routes = Route.getRoutes();
 
       if (routes.length === 0) {

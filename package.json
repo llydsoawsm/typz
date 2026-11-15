@@ -12,8 +12,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@typz/core": "workspace:*",
-    "typz": "workspace:*"
+    "@llydsoawsm/core": "workspace:*",
+    "@llydsoawsm/typz": "workspace:*"
   },
   "devDependencies": {
     "@libsql/client": "^0.14.0",

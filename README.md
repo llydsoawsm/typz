@@ -21,7 +21,25 @@
 
 ## 🚀 Quick Start
 
-### 1. Project Structure
+### 1. Create a New Project
+
+Scaffold a complete Typz application in seconds without cloning the repository:
+
+```bash
+npm create typz my-app
+# or
+npx typz new my-app
+```
+
+Navigate into your project and start the development server:
+
+```bash
+cd my-app
+npm install
+npm run dev
+```
+
+### 2. Project Structure
 
 ```
 typz-project/
